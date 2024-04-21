@@ -111,9 +111,9 @@ const UserPage = () => {
     <Container>
       <Title value='Users' />
       <Form onsubmit={handleSubmit} position='justify-end'>
-        <Textbox onchange={handleChangeId} name='id' holder='Id' />
-        <Textbox disabled={disable} onchange={handleFname} name='first_name' holder='First Name' />
-        <Textbox disabled={disable} onchange={handleLname} name='last_name' holder='Last Name' />
+        <Textbox onchange={handleChangeId} name='id' holder='Matricule' />
+        <Textbox disabled={disable} onchange={handleFname} name='first_name' holder='Prenom' />
+        <Textbox disabled={disable} onchange={handleLname} name='last_name' holder='Nom' />
         <Textbox disabled={disable} name='username' holder='Username' />
         <Textbox disabled={disable} name='password' holder='Password' />
 
@@ -129,8 +129,8 @@ const UserPage = () => {
           )) : [{value: 0, text: 'loading'}]
         } />
         <Select onclick={handleCheckbox} options={[
-          { value: 'add', text: 'Add' },
-          { value: 'remove', text: 'Remove' }
+          { value: 'add', text: 'Ajouter' },
+          { value: 'remove', text: 'Supprimer' }
         ]} />
         <Button value='Submit' />
       </Form>
