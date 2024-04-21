@@ -37,6 +37,7 @@ const createUser = `
 const createArticleType = `
   CREATE TABLE IF NOT EXISTS ArticleType (
     type_id   SERIAL PRIMARY KEY,
+    datetime  TIMESTAMP WITH TIME ZONE NOT NULL,
     type_name VARCHAR(50) NOT NULL
   );
 `
@@ -44,6 +45,7 @@ const createArticleType = `
 const createArticle = `
   CREATE TABLE IF NOT EXISTS Article (
     article_id    SERIAL PRIMARY KEY,
+    datetime      TIMESTAMP WITH TIME ZONE NOT NULL,
     article_name  VARCHAR(50) NOT NULL,
     type_id       INT NOT NULL,
 
@@ -69,7 +71,7 @@ const createItem = `
     code        VARCHAR(50),
     article_id  INT NOT NULL,
     user_id     INT NOT NULL,
-    error_id    INT NOT NULL,
+    error_id    INT,
 
     CONSTRAINT fk_article FOREIGN KEY (article_id) REFERENCES Article  (article_id),
     CONSTRAINT fk_user    FOREIGN KEY (user_id)    REFERENCES Users    (user_id),

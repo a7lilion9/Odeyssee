@@ -8,7 +8,7 @@ const Button = ({ value, type }) => {
   }
 
   return (
-    <input type="submit" value={value} className="flex-shrink-0 flex-grow-0 w-28 bg-green-500 text-slate-50 px-5 py-2 hover:bg-green-400 ml-1 active:bg-green-600 m-2" />
+    <input type="submit" value={value} className="self-start flex-shrink-0 flex-grow-0 w-28 bg-green-500 text-slate-50 px-5 py-2 hover:bg-green-400 ml-1 active:bg-green-600 m-2" />
   )
 }
 
