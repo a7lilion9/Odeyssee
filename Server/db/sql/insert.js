@@ -49,4 +49,38 @@ const articletype = async (type_id, datetime, type_name) => {
   );
 };
 
-export default { service, role, user, articletype };
+const article = async (article_id, datetime, article_name, type_id) => {
+  await pool.query(
+    `
+    INSERT INTO Article (article_id, datetime, article_name, type_id)
+    VALUES ($1, $2, $3, $4)
+    `,
+    [article_id, datetime, article_name, type_id]
+  );
+};
+
+const error = async (
+  error_id,
+  datetime,
+  error_desc,
+  error_type,
+  service_id
+) => {
+  await pool.query(
+    `
+    INSERT INTO Error (error_id, datetime, error_desc, error_type, service_id)
+     VALUES ($1, $2, $3, $4, $5)
+    `,
+    [error_id, datetime, error_desc, error_type, service_id]
+  );
+};
+
+const item = async (item_id, datetime, code, article_id, user_id, error_id) => {
+  await pool.query(
+    `INSERT INTO Items (item_id, datetime, code, article_id, user_id, error_id)
+    VALUES ($1, $2, $3, $4, $5, $6)`,
+    [item_id, datetime, code, article_id, user_id, error_id]
+  );
+};
+
+export default { service, role, user, articletype, article, error, item };

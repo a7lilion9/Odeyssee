@@ -1,4 +1,4 @@
-import pool from "../pool.js"
+import pool from "../pool.js";
 
 // Every table needs to have the primary key with the name as ${table}_id
 
@@ -8,15 +8,16 @@ const createService = `
     datetime      TIMESTAMP WITH TIME ZONE NOT NULL,
     service_name  VARCHAR(50) NOT NULL
   );
-`
+`;
 
 const createRole = `
   CREATE TABLE IF NOT EXISTS Role (
-    role_id   SERIAL PRIMARY KEY,
-    datetime  TIMESTAMP WITH TIME ZONE NOT NULL,
-    role_name VARCHAR(50) NOT NULL
+    role_id     SERIAL PRIMARY KEY,
+    datetime    TIMESTAMP WITH TIME ZONE NOT NULL,
+    role_name   VARCHAR(50) NOT NULL
+    permissions VARCHAR(255)
   );
-`
+`;
 
 const createUser = `
   CREATE TABLE IF NOT EXISTS Users (
@@ -32,7 +33,7 @@ const createUser = `
     CONSTRAINT fk_service FOREIGN KEY (service_id) REFERENCES Service (service_id),
     CONSTRAINT fk_role    FOREIGN KEY (role_id) REFERENCES Role (role_id)
   );
-`
+`;
 
 const createArticleType = `
   CREATE TABLE IF NOT EXISTS ArticleType (
@@ -40,7 +41,7 @@ const createArticleType = `
     datetime  TIMESTAMP WITH TIME ZONE NOT NULL,
     type_name VARCHAR(50) NOT NULL
   );
-`
+`;
 
 const createArticle = `
   CREATE TABLE IF NOT EXISTS Article (
@@ -51,18 +52,19 @@ const createArticle = `
 
     CONSTRAINT fk_articleType FOREIGN KEY (type_id) REFERENCES ArticleType (type_id)
   );
-`
+`;
 
 const createError = `
   CREATE TABLE IF NOT EXISTS Error (
     error_id    SERIAL PRIMARY KEY,
+    datetime    TIMESTAMP WITH TIME ZONE NOT NULL,
     error_desc  VARCHAR(255) NOT NULL,
     error_type  VARCHAR(50),
     service_id  INT NOT NULL,
 
     CONSTRAINT fk_service FOREIGN KEY (service_id) REFERENCES Service (service_id)
   );
-`
+`;
 
 const createItem = `
   CREATE TABLE IF NOT EXISTS Items (
@@ -77,7 +79,7 @@ const createItem = `
     CONSTRAINT fk_user    FOREIGN KEY (user_id)    REFERENCES Users    (user_id),
     CONSTRAINT fk_error   FOREIGN KEY (error_id)   REFERENCES Error    (error_id)
   );
-`
+`;
 
 const createTablesQueries = [
   createService,
@@ -87,27 +89,29 @@ const createTablesQueries = [
   createUser,
   createError,
   createItem,
-]
+];
 
 const drop = (table) => `
   DROP TABLE IF EXISTS ${table};
-`
+`;
 
-const runQuery = async query => {
+const runQuery = async (query) => {
   try {
-    await pool.query(query)
-  } catch(e) {
-    console.error(e.stack)
+    await pool.query(query);
+  } catch (e) {
+    console.error(e.stack);
   }
-}
+};
 
 const createAllTables = () => {
-  createTablesQueries.forEach(query => {
-    runQuery(query)
-  })
-}
+  createTablesQueries.forEach((query) => {
+    runQuery(query);
+  });
+};
 
 export default {
-  runQuery, drop, createAllTables,
+  runQuery,
+  drop,
+  createAllTables,
   createTablesQueries,
-}
+};

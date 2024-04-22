@@ -12,6 +12,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       {/* <UserPage /> */}
       {/* <ServicePage /> */}
+      {/* <RolePage /> */}
       <ArticleTypePage />
     </QueryClientProvider>
   );

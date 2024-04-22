@@ -44,4 +44,21 @@ const articletypes = async (id) => {
   console.log("Deleted rows: ", res.rowCount);
 };
 
-export default { services, roles, users, articletypes };
+const article = async (id) => {
+  const res = await pool.query("DELETE FROM Article WHERE article_id = $1", [
+    id,
+  ]);
+  console.log("Deleted rows: ", res.rowCount);
+};
+
+const error = async (id) => {
+  const res = await pool.query("DELETE FROM Error WHERE error_id = $1", [id]);
+  console.log("Deleted rows: ", res.rowCount);
+};
+
+const item = async (id) => {
+  const res = await pool.query("DELETE FROM Items WHERE item_id = $1", [id]);
+  console.log("Deleted rows: ", res.rowCount);
+};
+
+export default { services, roles, users, articletypes, article, error, item };

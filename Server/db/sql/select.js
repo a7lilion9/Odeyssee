@@ -34,7 +34,22 @@ const getAllArticleTypes = async () => {
   `);
 };
 
+const getAllArticles = async () => {
+  return await pool.query("SELECT * FROM Article");
+};
+
+const getAllErrors = async () => {
+  return await pool.query("SELECT * FROM Error");
+};
+
+const getAllItems = async () => {
+  return await pool.query("SELECT * FROM Items");
+};
+
 export default {
+  getAllItems,
+  getAllErrors,
+  getAllArticles,
   getAllArticleTypes,
   getAllUsers,
   getAllTables,
