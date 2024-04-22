@@ -1,8 +1,5 @@
-
 const datetime = () => {
-  return (new Date()).toISOString()
-}
+  return new Date().toISOString();
+};
 
-export {
-  datetime,
-}
+export { datetime };
