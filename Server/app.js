@@ -20,9 +20,41 @@ app.use((req, res, next) => {
 
 app.get("/", async (req, res) => {
   // insert.service((new Date()).toISOString(), 'Test')
-  const { rows } = await select.getAllServices();
-  console.log(rows);
+  res.send("This is the Home page");
+  res.status(200);
+});
+
+// Article Type
+app.get("/api/articletypes", async (req, res) => {
+  const { rows } = await select.getAllArticleTypes();
+  console.log("get /api/aticletypes");
   res.status(200).json(rows);
+});
+
+app.post("/api/articletypes/add", async (req, res) => {
+  try {
+    const id = req.body.type_id;
+    const datetime = req.body.datetime;
+    const typeName = req.body.type_name;
+
+    console.log("post /api/aticletypes/add", req.body);
+    insert.articletype(id, datetime, typeName);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+app.post("/api/articletypes/remove", async (req, res) => {
+  try {
+    console.log("post /api/articletype/remove", req.body.type_id);
+    await remove.articletypes(req.body.type_id);
+    res.status(201);
+  } catch (e) {
+    console.error(e.stack);
+    res.status(400);
+  }
 });
 
 // Users
@@ -43,7 +75,7 @@ app.post("/api/users/add", async (req, res) => {
     const role_id = req.body.role_id;
     const service_id = req.body.service_id;
 
-    console.log("post /api/users/add", req.body);
+    console.log("post /api/users/add", req.body.user_id);
     insert.user(
       id,
       datetime,
@@ -63,7 +95,7 @@ app.post("/api/users/add", async (req, res) => {
 
 app.post("/api/users/remove", async (req, res) => {
   try {
-    console.log("post /api/users/remove", req.body);
+    console.log("post /api/users/remove", req.body.user_id);
     await remove.users(req.body.user_id);
     res.status(201);
   } catch (e) {
@@ -81,7 +113,7 @@ app.get("/api/roles", async (req, res) => {
 
 app.post("/api/roles/add", async (req, res) => {
   try {
-    console.log("post /api/roles/add", req.body);
+    console.log("post /api/roles/add", req.body.role_id);
     insert.role(req.body.role_id, req.body.datetime, req.body.role_name);
     res.status(201);
   } catch (e) {
@@ -92,7 +124,7 @@ app.post("/api/roles/add", async (req, res) => {
 
 app.post("/api/roles/remove", async (req, res) => {
   try {
-    console.log("post /api/roles/remove", req.body);
+    console.log("post /api/roles/remove", req.body.role_id);
     await remove.roles(req.body.role_id);
     res.status(201);
   } catch (e) {
@@ -110,7 +142,7 @@ app.get("/api/services", async (req, res) => {
 
 app.post("/api/services/remove", async (req, res) => {
   try {
-    console.log("post /api/services/remove", req.body);
+    console.log("post /api/services/remove", req.body.service_id);
     await remove.services(req.body.service_id);
     res.status(201);
   } catch (e) {
@@ -121,7 +153,7 @@ app.post("/api/services/remove", async (req, res) => {
 
 app.post("/api/services/add", async (req, res) => {
   try {
-    console.log("post /api/services/add", req.body);
+    console.log("post /api/services/add", req.body.service_id);
     insert.service(
       req.body.service_id,
       req.body.datetime,

@@ -1,24 +1,47 @@
 import pool from "../pool.js";
 
 const services = async (id) => {
-  await pool.query(`
+  const res = await pool.query(
+    `
   DELETE FROM Service
-  WHERE service_id = ${id}
-  `)
-}
+  WHERE service_id = $1
+  `,
+    [id]
+  );
+  console.log("Deleted rows: ", res.rowCount);
+};
 
 const roles = async (id) => {
-  await pool.query(`
+  const res = await pool.query(
+    `
   DELETE FROM Role
-  WHERE role_id = ${id}
-  `)
-}
+  WHERE role_id = $1
+  `,
+    [id]
+  );
+  console.log("Deleted rows: ", res.rowCount);
+};
 
-const users = async(id) => {
-  await pool.query(`
+const users = async (id) => {
+  const res = await pool.query(
+    `
     DELETE FROM Users
-    WHERE user_id = ${id}
-  `)
-}
+    WHERE user_id = $1
+  `,
+    [id]
+  );
+  console.log("Deleted rows: ", res.rowCount);
+};
 
-export default {services, roles, users}
+const articletypes = async (id) => {
+  const res = await pool.query(
+    `
+    DELETE FROM ArticleType
+    WHERE type_id = $1
+  `,
+    [id]
+  );
+  console.log("Deleted rows: ", res.rowCount);
+};
+
+export default { services, roles, users, articletypes };

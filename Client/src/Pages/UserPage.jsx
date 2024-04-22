@@ -1,4 +1,12 @@
-import { Button, Title, Textbox, Form, Container, Select } from "../Components";
+import {
+  Button,
+  Title,
+  Textbox,
+  Form,
+  Container,
+  Select,
+  Notification,
+} from "../Components";
 import TableData from "../Parts/TableData";
 import db from "../db";
 import { datetime } from "../utils";
@@ -72,7 +80,7 @@ const UserPage = () => {
 
     mutate(objToSend);
 
-    console.log(objToSend);
+    // console.log(objToSend);
 
     if (action === "add") {
       queryClient.setQueryData("users", (old) => [...old, objToSend]);
@@ -113,8 +121,6 @@ const UserPage = () => {
     }
     setAction(action);
   };
-
-  // console.log(usersData);
 
   return (
     <Container>
