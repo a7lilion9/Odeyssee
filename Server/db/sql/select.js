@@ -39,11 +39,18 @@ const getAllArticles = async () => {
 };
 
 const getAllErrors = async () => {
-  return await pool.query("SELECT * FROM Error");
+  return await pool.query(`
+  SELECT * FROM Error 
+  INNER JOIN Service ON Service.service_id = Error.service_id;`);
 };
 
 const getAllItems = async () => {
-  return await pool.query("SELECT * FROM Items");
+  return await pool.query(`
+    SELECT * FROM Items
+    INNER JOIN Article ON Article.article_id = Items.article_id
+    INNER JOIN Users   ON Users.user_id      = Items.user_id
+    INNER JOIN Error   ON Error.error_id     = Items.error_id;
+  `);
 };
 
 export default {

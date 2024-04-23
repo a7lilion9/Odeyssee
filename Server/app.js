@@ -24,6 +24,109 @@ app.get("/", async (req, res) => {
   res.status(200);
 });
 
+// Item
+app.get("/api/items", async (req, res) => {
+  const { rows } = await select.getAllItems();
+  console.log("get /api/items");
+  res.status(200).json(rows);
+});
+
+app.post("/api/items/add", async (req, res) => {
+  try {
+    const id = req.body.item_id;
+    const datetime = req.body.datetime;
+    const code = req.body.code;
+    const articleId = req.body.article_id;
+    const userId = req.body.user_id;
+    const errorId = req.body.error_id;
+    console.log("post /api/items/add", req.body);
+    insert.item(id, datetime, code, articleId, userId, errorId);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+app.post("/api/items/remove", async (req, res) => {
+  try {
+    console.log("post /api/items/remove", req.body);
+    await remove.item(req.body.item_id);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+// Error
+app.get("/api/errors", async (req, res) => {
+  const { rows } = await select.getAllErrors();
+  console.log("get /api/errors");
+  res.status(200).json(rows);
+});
+
+app.post("/api/errors/add", async (req, res) => {
+  try {
+    const id = req.body.error_id;
+    const datetime = req.body.datetime;
+    const errorDesc = req.body.error_desc;
+    const errorType = req.body.error_type;
+    const serviceId = req.body.service_id;
+
+    console.log("post /api/errors/add", req.body);
+    insert.error(id, datetime, errorDesc, errorType, serviceId);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+app.post("/api/errors/remove", async (req, res) => {
+  try {
+    console.log("post /api/errors/remove", req.body);
+    await remove.error(req.body.error_id);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+// Article
+app.get("/api/articles", async (req, res) => {
+  const { rows } = await select.getAllArticles();
+  console.log("get /api/articles");
+  res.status(200).json(rows);
+});
+
+app.post("/api/articles/add", async (req, res) => {
+  try {
+    const id = req.body.article_id;
+    const datetime = req.body.datetime;
+    const articleName = req.body.article_name;
+    const typeId = req.body.type_id;
+
+    console.log("post /api/articles/add", req.body);
+    insert.article(id, datetime, articleName, typeId);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
+app.post("/api/articles/remove", async (req, res) => {
+  try {
+    console.log("post /api/aticles/remove", req.body.article_id);
+    await remove.article(req.body.article_id);
+    res.status(201);
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  }
+});
+
 // Article Type
 app.get("/api/articletypes", async (req, res) => {
   const { rows } = await select.getAllArticleTypes();
