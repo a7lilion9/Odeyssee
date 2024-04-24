@@ -3,10 +3,10 @@ const Select = ({ onclick, options, disabled }) => {
 
   if (disabled) {
     tailwind =
-      "bg-gray-200 border-slate-800 focus:outline-none px-4 border py-1 mx-2 my-2 inline-block";
+      "bg-gray-200 border-gray-200 focus:outline-none px-4 border py-1 mx-2 my-2 inline-block";
   } else {
     tailwind =
-      "border-slate-800 focus:outline-none px-4 border py-1 mx-2 my-2 inline-block";
+      "px-5 py-3 border rounded border-gray-200 focus:border-gray-700 text-sm shadow-sm focus:outline-none mx-2 my-2 inline-block focus:shadow-outline hover:shadow-md";
   }
 
   return (

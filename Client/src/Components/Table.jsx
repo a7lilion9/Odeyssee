@@ -1,9 +1,17 @@
 const Table = ({ children }) => {
-  return <table className="border-collapse m-2">{children}</table>;
+  return (
+    <table className=" cursor-default min-w-full m-auto overflow-hidden leading-normal shadow-gray-200 shadow-md rouned-lg">
+      {children}
+    </table>
+  );
 };
 
 const Col = ({ children }) => {
-  return <td className="border px-5 py-2">{children}</td>;
+  return (
+    <td className="px-5 py-3 border-t border-blue-200 text-sm text-gray-800">
+      {children}
+    </td>
+  );
 };
 
 const Row = ({ children }) => {
@@ -11,7 +19,7 @@ const Row = ({ children }) => {
 };
 
 const THeader = ({ children }) => {
-  return <thead className="bg-slate-600 text-slate-100">{children}</thead>;
+  return <thead className="bg-blue-100">{children}</thead>;
 };
 
 const TBody = ({ children }) => {
