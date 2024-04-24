@@ -35,7 +35,10 @@ const getAllArticleTypes = async () => {
 };
 
 const getAllArticles = async () => {
-  return await pool.query("SELECT * FROM Article");
+  return await pool.query(`
+    SELECT * FROM Article
+    INNER JOIN ArticleType ON ArticleType.type_id = Article.type_id;
+  `);
 };
 
 const getAllErrors = async () => {

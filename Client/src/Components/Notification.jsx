@@ -1,25 +1,28 @@
-// Still under construction
+import React, { useState } from "react";
 
-import { useState } from "react";
-import Container from "./Container";
+const Notification = ({ message, type }) => {
+  const [show, setShow] = useState(true);
 
-const Notification = ({ text }) => {
-  const [visible, setVisible] = useState(true);
+  const handleClose = () => {
+    setShow(false);
+  };
 
-  const internalStyle =
-    "text-xl text-center text-green-50 justify-center h-xl bg-green-500 p-4 transition-all static border-b-4 border-green-200";
-
-  const defaultStyle =
-    "text-xl text-center text-white justify-center h-xl bg-white p-4 transition-all static border-b-4 border-slate-200";
-
-  setTimeout(() => {
-    setVisible(false);
-  }, 2000);
-
-  if (visible) {
-    return <Container style={internalStyle}>{text}</Container>;
-  }
-  return <Container style={defaultStyle}>Placeholder</Container>;
+  return (
+    <>
+      {show && (
+        <div
+          className={`fixed bottom-0 right-0 mb-4 mr-4 bg-green-200 text-green-800 py-2 px-4 rounded-lg shadow-md z-50`}
+        >
+          <div
+            onClick={handleClose}
+            className="cursor-pointer flex justify-between gap-2 items-center"
+          >
+            <span className=" px-2 text-sm font-semibold">{message}</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Notification;
