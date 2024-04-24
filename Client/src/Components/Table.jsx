@@ -1,55 +1,25 @@
+const Table = ({ children }) => {
+  return <table className="border-collapse m-2">{children}</table>;
+};
 
-const Table = ({children}) => {
+const Col = ({ children }) => {
+  return <td className="border px-5 py-2">{children}</td>;
+};
 
-  return (
-    <table className="border-collapse m-2">
-      {children}
-    </table>
-  )
-}
+const Row = ({ children }) => {
+  return <tr>{children}</tr>;
+};
 
-const Col = ({children}) => {
-  return (
-    <td className="border px-5 py-2">
-      {children}
-    </td>
-  )
-}
+const THeader = ({ children }) => {
+  return <thead className="bg-slate-600 text-slate-100">{children}</thead>;
+};
 
-const Row = ({children}) => {
-  
-  return (
-    <tr>
-      {children}
-    </tr>
-  )
-}
+const TBody = ({ children }) => {
+  return <tbody>{children}</tbody>;
+};
 
-const THeader = ({children}) => {
+const TFooter = ({ children }) => {
+  return <tfoot>{children}</tfoot>;
+};
 
-  return (
-    <thead className="bg-slate-600 text-slate-100">
-      {children}
-    </thead>
-  )
-}
-
-const TBody = ({children}) => {
-
-  return (
-    <tbody>
-      {children}
-    </tbody>
-  )
-}
-
-const TFooter = ({children}) => {
-
-  return (
-    <tfoot>
-      {children}
-    </tfoot>
-  )
-}
-
-export {Table, TBody, THeader, TFooter, Row, Col}
+export { Table, TBody, THeader, TFooter, Row, Col };

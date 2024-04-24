@@ -3,73 +3,86 @@ import TableData from "../Parts/TableData";
 import db from "../db";
 import { datetime } from "../utils";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // Component
 const ServicePage = () => {
-  const [service, setService] = useState("");
-  const [id, setId] = useState("");
-  const [action, setAction] = useState("add");
+  const [formData, setFormData] = useState({
+    id: "",
+    service: "",
+    action: "add",
+  });
 
   const queryClient = useQueryClient();
 
-  const handleActions = (action) => {
-    if (action === "add") {
-      return async (obj) => {
-        return await db.post("api/services/add", obj);
-      };
-    } else if (action === "remove") {
-      return async (obj) => {
-        return await db.post("api/services/remove", obj);
-      };
+  // Determine the endpoint based on the action specified in formData
+  const serviceActionEndpoint = useCallback(() => {
+    const endpoints = {
+      add: "api/services/add",
+      remove: "api/services/remove",
+    };
+    return endpoints[formData.action] || null;
+  }, [formData.action]);
+
+  // Mutation setup for performing add/remove operations
+  const mutateService = useMutation(async (obj) => {
+    const endpoint = serviceActionEndpoint();
+    if (endpoint) {
+      return db.post(endpoint, obj);
     }
-  };
 
-  // Mutation to add a service
-  const { mutate } = useMutation(handleActions(action));
-
-  // useQuery to fetch all services
-  const { data } = useQuery("services", async () => {
-    return await db.get("api/services");
+    throw new Error(`Action ${formData.action} is not defined`);
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Fetch all services
+  const fetchServices = useCallback(async () => db.get("api/services"), []);
 
-    const mobj = {
-      service_id: id,
-      datetime: datetime(),
-      service_name: service,
-    };
+  // Using React Query's useQuery to manage fetching data
+  const { data } = useQuery("services", fetchServices);
 
-    mutate(mobj);
+  // Handle form submission
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const obj = {
+        service_id: formData.id,
+        datetime: datetime(),
+        service_name: formData.service,
+      };
 
-    if (action === "add") {
-      queryClient.setQueryData("services", (old) => [...old, mobj]);
-    } else if (action === "remove") {
-      queryClient.setQueryData("services", (old) =>
-        data.filter((e) => +e.service_id !== +id)
-      );
-    } else {
-      console.error(`Action '${action}' is Undefined`);
-    }
+      mutateService.mutate(obj);
+
+      // Update the local data based on the action
+      if (formData.action === "add") {
+        queryClient.setQueryData("services", (old) => [...old, obj]);
+      } else if (formData.action === "remove") {
+        queryClient.setQueryData("services", (old) =>
+          old.filter((e) => +e.service_id !== +formData.id)
+        );
+      }
+    },
+    [formData]
+  );
+
+  // Universal handler for form field changes
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
-
-  const handleChange = (e) => setService(e.target.value);
-  const handleChangeId = (e) => setId(e.target.value);
-  const handleCheckbox = (e) => setAction(e.target.value);
-
-  // console.log(data);
 
   return (
     <Container>
       <Title value="Services" />
       <Form onsubmit={handleSubmit} position="justify-end">
-        <Textbox name="id" onchange={handleChangeId} holder="Id" />
-        <Textbox name="service" onchange={handleChange} holder="Service Name" />
+        <Textbox name="id" onchange={handleChange("id")} holder="Id" />
+        <Textbox
+          name="service"
+          onchange={handleChange("service")}
+          holder="Service Name"
+          disabled={formData.action === "remove" ? "disabled" : ""}
+        />
         <Select
-          onclick={handleCheckbox}
+          onclick={handleChange("action")}
           options={[
             { value: "add", text: "Add" },
             { value: "remove", text: "Remove" },

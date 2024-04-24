@@ -90,8 +90,18 @@ const RolePage = () => {
     <Container>
       <Title value="Roles" />
       <Form onsubmit={handleSubmit} position="justify-end">
-        <Textbox name="id" onchange={handleChangeId} holder="Id" />
-        <Textbox name="role" onchange={handleChangeRole} holder="Role Name" />
+        <Textbox
+          name="id"
+          onchange={handleChangeId}
+          holder="Id"
+          label="Entrer ID"
+        />
+        <Textbox
+          name="role"
+          onchange={handleChangeRole}
+          holder="Role Name"
+          label="Entrer le nom de role"
+        />
         <Select
           onclick={handleCheckbox}
           options={[
