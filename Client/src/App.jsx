@@ -6,6 +6,9 @@ import RolePage from "./Pages/RolePage";
 import UserPage from "./Pages/UserPage";
 import ArticleTypePage from "./Pages/ArticleTypePage";
 import ArticlePage from "./Pages/ArticlePage";
+import HomePage from "./Pages/HomePage";
+import ErrorPage from "./Pages/ErrorPage";
+import ItemPage from "./Pages/ItemPage";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +32,18 @@ const router = createBrowserRouter([
   {
     path: "/articles",
     element: <ArticlePage />,
+  },
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/errors",
+    element: <ErrorPage />,
+  },
+  {
+    path: "/items",
+    element: <ItemPage />,
   },
 ]);
 

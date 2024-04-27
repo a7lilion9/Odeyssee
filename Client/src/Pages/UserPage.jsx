@@ -55,7 +55,7 @@ const UserPage = () => {
     async () => await db.get("api/roles")
   );
 
-  // useQuery to fetch services
+  // useQuery to fetch roles
   const { data: servicesData } = useQuery(
     "services",
     async () => await db.get("api/services")
@@ -80,7 +80,7 @@ const UserPage = () => {
 
     mutate(objToSend);
 
-    // console.log(objToSend);
+    console.log(objToSend);
 
     if (action === "add") {
       queryClient.setQueryData("users", (old) => [...old, objToSend]);
